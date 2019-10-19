@@ -26,6 +26,10 @@ def arnparse(arn_str):
         raise MalformedArnError(arn_str)
 
     elements = arn_str.split(':', 5)
+
+    if "volume/vol-" in arn_str:
+        elements = elements[:2] + ["volume"] + elements[2:]
+
     service = elements[2]
     resource = elements[5]
 

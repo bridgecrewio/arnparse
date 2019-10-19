@@ -131,6 +131,17 @@ def test__arnparse__resource_with_multiple_slashes():
     assert arn.resource_type == 'trigger'
     assert arn.resource == 'example61b3df36bff1dafaf1aa304b0ef1a975/alert/example8780e9ca227f98dae37665c3fd22b585'
 
+def test__arnparse__resource_with_no_service():
+    arn_str = 'arn:aws:us-east-1:123456789012:volume/vol-00000000000000001'
+
+    arn = arnparse(arn_str)
+
+    assert arn.partition == 'aws'
+    assert arn.service == 'volume'
+    assert arn.region == 'us-east-1'
+    assert arn.account_id == '123456789012'
+    assert arn.resource_type == 'volume'
+    assert arn.resource == 'vol-00000000000000001'
 
 def test__arnparse__no_region__no_acount_id():
     arn_str = 'arn:aws:s3:::my_corporate_bucket'
